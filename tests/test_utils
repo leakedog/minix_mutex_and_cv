@@ -1,0 +1,19 @@
+
+OUT=out
+BIN=bin
+TEMPLATE=template
+
+skip(){
+	echo Skipped.
+}
+
+mdiff(){
+	diff $OUT/$1 $TEMPLATE/$2 > /dev/null
+	if [ $? != 0 ]; then  echo FAIL; else echo OK; fi
+}
+
+run(){
+	echo -n run $1 ""
+	$BIN/$2 > $OUT/$3
+	mdiff $3 $4
+}

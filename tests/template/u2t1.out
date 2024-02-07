@@ -1,0 +1,7 @@
+p lock: 0
+ch lock: 0
+ch broadcast: 0
+ch unlock: 0
+p lock: 0
+p wait: 0
+p unlock: 0
