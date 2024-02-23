@@ -149,3 +149,27 @@ message *m_ptr;
 
   rmp->mp_flags |= VFS_CALL;
 }
+
+/*===========================================================================*
+ *				tell_cvs			 	     *
+ *===========================================================================*/
+void tell_cvs(rmp, m_ptr, type)
+struct mproc *rmp;
+message *m_ptr;
+int type;
+{
+    // type 0 - unpause
+    // type 1 - exit
+    if(type < 0 || type > 1) 
+		return;
+	for(int i = 0; i < NR_PROCS; i++) {
+        if((strcmp(mproc[i].mp_name, "cvs") == 0 && (mproc[i].mp_flags & IN_USE)) || 
+			(strcmp(mproc[i].mp_name, "/usr/sbin/cvs") == 0 && (mproc[i].mp_flags & IN_USE))) {
+            m_ptr->m1_i1 = rmp->mp_endpoint;
+			m_ptr->m_source = mproc[i].mp_endpoint;
+			m_ptr->m_type = 4 + type;
+            int r = asynsend3(mproc[i].mp_endpoint, m_ptr, AMF_NOREPLY);
+            break;
+        }
+    }
+}

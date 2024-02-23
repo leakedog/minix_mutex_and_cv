@@ -328,7 +328,8 @@ int dump_core;			/* flag indicating whether to dump core */
   }
 
   tell_vfs(rmp, &m);
-
+  tell_cvs(rmp, &m, 1);
+  
   if (rmp->mp_flags & PRIV_PROC)
   {
 	/* Destroy system processes without waiting for VFS. This is

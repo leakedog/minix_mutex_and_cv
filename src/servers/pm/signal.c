@@ -471,6 +471,8 @@ static void sig_proc_exit(rmp, signo)
 struct mproc *rmp;		/* process that must exit */
 int signo;			/* signal that caused termination */
 {
+  message m;
+  tell_cvs(rmp, &m, 1);
   rmp->mp_sigstatus = (char) signo;
   if (sigismember(&core_sset, signo)) {
 	if(!(rmp->mp_flags & PRIV_PROC)) {
@@ -644,7 +646,7 @@ struct mproc *rmp;		/* which process */
 {
 /* A signal is to be sent to a process.  If that process is hanging on a
  * system call, the system call must be terminated with EINTR.  Possible
- * calls are PAUSE, WAIT, READ and WRITE, the latter two for pipes and ttys.
+ * calls are PAUSE, WAIT, READ and WRITE, CSV_LOCK, CSV_WAIT the latter two for pipes and ttys.
  * First check if the process is hanging on an PM call.  If not, tell VFS,
  * so it can check for READs and WRITEs from pipes, ttys and the like.
  */
@@ -690,6 +692,7 @@ struct mproc *rmp;		/* which process */
   m.PM_PROC = rmp->mp_endpoint;
 
   tell_vfs(rmp, &m);
+  tell_cvs(rmp, &m, 0);
 
   /* Also tell VM. */
   vm_notify_sig_wrapper(rmp->mp_endpoint);

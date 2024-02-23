@@ -4,7 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <cv.h>
+#include <cvs.h>
 
 void fail(char * str){
 	fprintf(stderr,"FAIL: %s.\n",str);

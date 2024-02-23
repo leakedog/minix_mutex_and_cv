@@ -42,6 +42,6 @@ int main(int argc, char* argv[]){
 		if (res) fail("unlock failed (3)");
 		printf("u: %d\n",m);
 	}
-
+	
 	return 0;
 }
