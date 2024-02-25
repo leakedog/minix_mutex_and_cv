@@ -160,10 +160,10 @@ int type;
 {
     // type 0 - unpause
     // type 1 - exit
-    if(type < 0 || type > 1) 
+    if (type < 0 || type > 1) 
 		return;
-	for(int i = 0; i < NR_PROCS; i++) {
-        if((strcmp(mproc[i].mp_name, "cvs") == 0 && (mproc[i].mp_flags & IN_USE)) || 
+	for (int i = 0; i < NR_PROCS; i++) {
+        if ((strcmp(mproc[i].mp_name, "cvs") == 0 && (mproc[i].mp_flags & IN_USE)) || 
 			(strcmp(mproc[i].mp_name, "/usr/sbin/cvs") == 0 && (mproc[i].mp_flags & IN_USE))) {
             m_ptr->m1_i1 = rmp->mp_endpoint;
 			m_ptr->m_source = mproc[i].mp_endpoint;

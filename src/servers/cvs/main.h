@@ -33,7 +33,7 @@
 #include <errno.h>
 #include <signal.h>
 
-#define MUTEX_NR 1024
+#define MUTEX_NR 2 * 1024
 #define SIZE(a) (sizeof(a)/sizeof(a[0]))
 
 #define NOT_WAITING 0

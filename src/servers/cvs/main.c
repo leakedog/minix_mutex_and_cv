@@ -108,8 +108,6 @@ void give_mutex_array_id(int mutex_array_id) {
     }
 }
 
-endpoint_t SELF_E;
-
 static struct {
     int type;
     void (*func)();
@@ -159,9 +157,6 @@ int main(int argc, char *argv[]){
 // ipc sef
 static int sef_cb_init_fresh(int UNUSED(type), sef_init_info_t *UNUSED(info))
 {
-
-    SELF_E = getprocnr();
-
     return (OK);
 }
 
@@ -293,37 +288,29 @@ void remove_cur_from_mutex_queue() {
 }
 
 void signal_interruption_handler() {
-    int okay = 0;
     for (int mutex_array_id = 0; mutex_array_id < MUTEX_NR; mutex_array_id++) {
         if (owns_mutex_array_id(m.m1_i1, mutex_array_id)) {
             give_mutex_array_id(mutex_array_id);
-            okay = 1;
         }
     }
     if (is_in_condvar_queue()) {
         remove_cur_from_condvar_queue();
         send_result(EINTR, m.m1_i1);
-        okay = 1;
     } else if (is_in_mutex_queue()) {
         remove_cur_from_mutex_queue();
         send_result(EINTR, m.m1_i1);
-        okay = 1;
     }
 }
 
 void signal_kill_handler() {
-    int okay = 0;
     for (int mutex_array_id = 0; mutex_array_id < MUTEX_NR; mutex_array_id++) {
         if (owns_mutex_array_id(m.m1_i1, mutex_array_id)) {
             give_mutex_array_id(mutex_array_id);
-            okay = 1;
         }
     }
     if (is_in_condvar_queue()) {
         remove_cur_from_condvar_queue();
-        okay = 1;
     } else if (is_in_mutex_queue()) {
         remove_cur_from_mutex_queue();
-        okay = 1;
     }
 } 
