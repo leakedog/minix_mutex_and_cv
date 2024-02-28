@@ -1,5 +1,5 @@
 
-# Project 2 - Mutex and Condition Variables Server
+# Project - Mutex and Condition Variables Server
 The goal is to extend the Minix system with a server implementing 'mutex' and 'condition variables' functionalities.
 
 Both mutexes and condition variables will be identified in the system by integers (`int` type). 
